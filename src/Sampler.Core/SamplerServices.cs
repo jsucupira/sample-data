@@ -21,7 +21,9 @@ namespace Sampler.Core
 
         public SamplerServices(IConfiguration configuration)
         {
-            _saveLocation = configuration.GetSection("SampleDataLocation").Value;
+            var section = configuration.GetSection("SampleDataLocation");
+            if (section != null)
+                _saveLocation = section.Value;
         }
 
         /// <summary>
@@ -38,14 +40,13 @@ namespace Sampler.Core
             {
                 var instance = CreateInstance();
 
-
                 IEnumerable<PropertyInfo> properties = typeof(T).GetProperties();
                 foreach (var propertyInfo in properties)
                 {
                     var method = helper.SetFunc(samplerOptions, propertyInfo);
                     var isUnique = false;
                     var isSequential = false;
-                    var isNull = false;
+                    var isNull = false;;
                     if (samplerOptions != null)
                     {
                         var value = samplerOptions.PropertyOptions.FirstOrDefault(c => c.Key == propertyInfo.Name);
@@ -170,13 +171,12 @@ namespace Sampler.Core
         /// <param name="objectList">List of T</param>
         public void SaveToFile(List<T> objectList)
         {
-            var fileName = $"{Activator.CreateInstance<T>().GetType()}.txt";
+            var fileName = $"{Activator.CreateInstance<T>().GetType()}.json";
 
             var location = new StringBuilder();
             if (string.IsNullOrEmpty(_saveLocation))
             {
-                location.Append(
-                    $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase)}\\{fileName}");
+                location.Append($"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase)}\\{fileName}");
                 location.Replace(@"file:\", "");
             }
             else

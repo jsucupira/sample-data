@@ -63,6 +63,13 @@ namespace Sampler.Core
 
                 function = () => _generateRandomServices.GenerateRandomDate();
             }
+            else if (type == typeof(DateTimeOffset))
+            {
+                if (propertiesSettings != null)
+                    return () => DateTimeOffset.Parse(propertiesSettings.PropertyValue);
+
+                function = () => _generateRandomServices.GenerateRandomDate();
+            }
             else if (type == typeof(DateTime?))
             {
                 if (propertiesSettings != null)
@@ -114,6 +121,12 @@ namespace Sampler.Core
                         break;
                     case SamplerOptions.Options.OneWord:
                         function = _generateRandomServices.GenerateRandomWord;
+                        break;
+                    case SamplerOptions.Options.Email:
+                        function = _generateRandomServices.GenerateRandomEmail;
+                        break;
+                    case SamplerOptions.Options.Phone:
+                        function = _generateRandomServices.GenerateRandomPhone;
                         break;
                     default:
                         function = _generateRandomServices.GenerateRandomWord;

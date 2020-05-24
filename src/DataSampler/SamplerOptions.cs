@@ -17,7 +17,9 @@ namespace Sampler
             IsNullable,
             Sequential,
             NullValue,
-            DefaultValue
+            DefaultValue,
+            Email,
+            Phone
         }
 
         #endregion

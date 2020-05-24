@@ -16,8 +16,10 @@ namespace Sampler.Core
             Phrase,
             IsNullable,
             Sequential,
+            Email,
             NullValue,
-            DefaultValue
+            DefaultValue,
+            Phone
         }
 
         #endregion

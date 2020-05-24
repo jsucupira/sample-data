@@ -115,6 +115,12 @@ namespace Sampler
                     case SamplerOptions.Options.OneWord:
                         function = _generateRandomServices.GenerateRandomWord;
                         break;
+                    case SamplerOptions.Options.Email:
+                        function = _generateRandomServices.GenerateRandomEmail;
+                        break;
+                    case SamplerOptions.Options.Phone:
+                        function = _generateRandomServices.GenerateRandomPhone;
+                        break;
                     default:
                         function = _generateRandomServices.GenerateRandomWord;
                         break;

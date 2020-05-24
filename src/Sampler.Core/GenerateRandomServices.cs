@@ -147,5 +147,20 @@ namespace Sampler.Core
 
             return null;
         }
+
+
+        public string GenerateRandomEmail()
+        {
+            string phrase = GenerateRandomPhrase();
+            List<string> word = phrase.Split(' ').ToList();
+            int size = word.Count - 1;
+            var wordCreated = word[_random.Next(size)].Trim();
+            return $"{wordCreated}@test.com";
+        }
+
+        public string GenerateRandomPhone()
+        {
+            return $"(850) 123-{_random.Next(1000, 9999)}";
+        }
     }
 }
