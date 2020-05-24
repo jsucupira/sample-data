@@ -33,15 +33,30 @@ namespace Sampler.Core.Test
                 PropertyValue = "1"
             };
 
+            var city = new PropertiesSettings
+            {
+                PropertyName = nameof(CheckoutVM.City),
+                PropertyValue = "Tampa"
+            };
+
+            var state = new PropertiesSettings
+            {
+                PropertyName = nameof(CheckoutVM.State),
+                PropertyValue = "FL"
+            };
+
             var options = new SamplerOptions();
             options.PropertyOptions.Add(nameof(CheckoutVM.FirstName), SamplerOptions.Options.OneWord);
             options.PropertyOptions.Add(nameof(CheckoutVM.LastName), SamplerOptions.Options.OneWord);
             options.PropertyOptions.Add(nameof(CheckoutVM.EMail), SamplerOptions.Options.Email);
             options.PropertyOptions.Add(nameof(CheckoutVM.PhoneNumber), SamplerOptions.Options.Phone);
+            options.PropertyOptions.Add(nameof(CheckoutVM.Address), SamplerOptions.Options.Phrase);
 
             options.PropertyDefaults.Add(visitSettings, SamplerOptions.Options.DefaultValue);
             options.PropertyDefaults.Add(location, SamplerOptions.Options.DefaultValue);
             options.PropertyDefaults.Add(TestId, SamplerOptions.Options.DefaultValue);
+            options.PropertyDefaults.Add(city, SamplerOptions.Options.DefaultValue);
+            options.PropertyDefaults.Add(state, SamplerOptions.Options.DefaultValue);
 
             var checkouts = SamplerServices<CheckoutVM>.CreateSampleData(20, options);
             visitSettings.PropertyValue = DateTimeOffset.UtcNow.ToString();
