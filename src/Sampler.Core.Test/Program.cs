@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 
@@ -63,6 +64,17 @@ namespace Sampler.Core.Test
             checkouts.AddRange(SamplerServices<CheckoutVM>.CreateSampleData(25, options));
             visitSettings.PropertyValue = DateTimeOffset.UtcNow.AddDays(1).ToString();
             checkouts.AddRange(SamplerServices<CheckoutVM>.CreateSampleData(30, options));
+
+            var random = new Random(1);
+
+            foreach (var item in checkouts)
+            {
+                item.Sex = random.Next(2) % 2 == 0 ? "Male" : "Female";
+                item.DateOfBirth = item.DateOfBirth.AddYears(-random.Next(50));
+                item.VisitDate = item.VisitDate.AddHours(random.Next(48));
+                item.VisitDate = item.VisitDate.AddMinutes(random.Next(400));
+            }
+
             samplerServices.SaveToFile(checkouts);
         }
     }
