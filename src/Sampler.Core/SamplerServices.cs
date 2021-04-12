@@ -271,10 +271,17 @@ namespace Sampler.Core
                 var method = helper.DecideTheAction(propertyInfo.PropertyType, SamplerOptions.Options.NoOptions);
                 if (method != null)
                 {
-                    var classType = item.GetType();
-                    var temp = classType.GetProperty(propertyInfo.Name);
-                    if (temp != null && temp.CanWrite)
-                        temp.SetValue(item, method.Invoke(), null);
+                    try
+                    {
+                        var classType = item.GetType();
+                        var temp = classType.GetProperty(propertyInfo.Name);
+                        if (temp != null && temp.CanWrite)
+                            temp.SetValue(item, method.Invoke(), null);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
                 }
             }
 
