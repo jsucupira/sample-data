@@ -10,10 +10,36 @@ namespace Sampler.Core.Test
     {
         static void Main(string[] args)
         {
+            CheckoutTest();
+            LicenseTest();
+        }
+
+        private static void LicenseTest()
+        {
             var configuration = new ConfigurationBuilder()
                 .AddInMemoryCollection(
-                new Dictionary<string, string> {{ "SampleDataLocation", @"c:\Temp\" } }
-            ).Build();
+                    new Dictionary<string, string> { { "SampleDataLocation", @"c:\Temp\" } }
+                ).Build();
+
+            var samplerServices = new SamplerServices<LicenseModel>(configuration);
+
+            var options = new SamplerOptions();
+
+            var licenseModels = SamplerServices<LicenseModel>.CreateSampleData(1, options);
+            foreach (var licenseModel in licenseModels)
+            {
+                licenseModel.AdditionalContact = SamplerServices<ContactModel>.CreateSampleData(2);
+            }
+
+            samplerServices.SaveToFile(licenseModels);
+        }
+
+        private static void CheckoutTest()
+        {
+            var configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(
+                    new Dictionary<string, string> {{"SampleDataLocation", @"c:\Temp\"}}
+                ).Build();
 
             var samplerServices = new SamplerServices<CheckoutVM>(configuration);
 
