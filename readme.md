@@ -8,9 +8,9 @@ Data Sampler is a .Net library intended to help developers to quick create sampl
 - Ability to save a set of data to a file, so that data can be re-used for your unit tests
 
 **Information**
-This is a .Net 4.0 library.
+This is a .net core 5.0
 
-**This dll has dependencies on Newtonsoft.Json**
+**This dll has dependencies on Newtonsoft.Json.13.0.1 and System.Linq.Dynamic.Core.1.2.9**
 
 **Create sample 10 sample data for the class poco:**
 ```c#
