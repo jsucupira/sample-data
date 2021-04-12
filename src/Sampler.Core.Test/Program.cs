@@ -10,7 +10,8 @@ namespace Sampler.Core.Test
     {
         static void Main(string[] args)
         {
-            var configuration = new ConfigurationBuilder().AddInMemoryCollection(
+            var configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(
                 new Dictionary<string, string> {{ "SampleDataLocation", @"c:\Temp\" } }
             ).Build();
 

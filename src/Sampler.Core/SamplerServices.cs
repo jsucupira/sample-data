@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Sampler.Core
 {
@@ -195,7 +196,11 @@ namespace Sampler.Core
                 using (var sw = new StreamWriter(fs))
                 {
                     fs = null;
-                    var jsonString = JsonConvert.SerializeObject(objectList);
+                    var jsonString = JsonConvert.SerializeObject(objectList, Formatting.None, new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                        ContractResolver = new CamelCasePropertyNamesContractResolver()
+                    });
                     sw.Write(jsonString);
                 }
             }
@@ -210,7 +215,7 @@ namespace Sampler.Core
         /// </summary>
         public void DeleteFile()
         {
-            var fileName = $"{Activator.CreateInstance<T>().GetType()}.txt";
+            var fileName = $"{Activator.CreateInstance<T>().GetType()}.json";
 
             var location = new StringBuilder();
             if (string.IsNullOrEmpty(_saveLocation))
@@ -235,7 +240,7 @@ namespace Sampler.Core
         /// <returns>List{`0}.</returns>
         public List<T> LoadSavedFile(SamplerOptions options = null)
         {
-            var fileName = $"{Activator.CreateInstance<T>().GetType()}.txt";
+            var fileName = $"{Activator.CreateInstance<T>().GetType()}.json";
 
             var location = new StringBuilder();
             if (string.IsNullOrEmpty(_saveLocation))
